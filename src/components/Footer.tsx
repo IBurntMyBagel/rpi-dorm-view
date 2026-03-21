@@ -9,9 +9,9 @@ export default function Footer() {
       {/* Footer content */}
       <div className="bg-gray-100 text-gray-700 py-4 text-center">
         <p>
-          &copy; {new Date().getFullYear()} RPI Dorm View.{" "}
+          {new Date().getFullYear()} RPI Dorm View.{" "}
           <Link
-            href="https://github.com/yourusername/rpi-dorm-view"
+            href="https://github.com/IBurntMyBagel/rpi-dorm-view"
             target="_blank"
             className="text-blue-600 hover:underline"
           >
