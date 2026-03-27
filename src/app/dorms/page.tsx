@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Home() {
   return (
     <main className="flex-col h-screen">
@@ -74,7 +76,9 @@ export default function Home() {
             <li className="flex p-4 bg-gray-400 rounded space-x-4">
               <img src="/fieldrpi.jpg" alt="86 field" className="w-48 h-48 object-cover rounded" />
               <div className="flex flex-col w-full space-y-4">
-                <div className="text-lg font-bold">Dorm: Crockett Hall</div>
+                <Link href="/dorms/crockett-hall" className="text-lg font-bold hover:underline">
+                  Crockett Hall
+                </Link>
 
                 <div className="grid grid-cols-3 gap-4">
                   <p>Nearest dining hall: Commons</p>
@@ -89,7 +93,9 @@ export default function Home() {
             <li className="flex p-4 bg-gray-400 rounded space-x-4">
               <img src="/fieldrpi.jpg" alt="86 field" className="w-48 h-48 object-cover rounded" />
               <div className="flex flex-col w-full space-y-4">
-                <div className="text-lg font-bold">Dorm: Quad</div>
+                <Link href="/dorms/quad" className="text-lg font-bold hover:underline">
+                  Quad
+                </Link>
 
                 <div className="grid grid-cols-3 gap-4">
                   <p>Nearest dining hall: Sage</p>
