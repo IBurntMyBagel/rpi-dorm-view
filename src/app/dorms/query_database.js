@@ -147,6 +147,12 @@ export class QueryDatabase {
 				continue;
 			}
 
+			// bug fix /?
+			if (filterKey === "air_conditioning") {
+				query = query.filter('"A/C"', 'eq', filterValue);
+				continue;
+			}
+
 			// Exact match filters
 			if (EXACT_MATCH_FILTERS.has(filterKey)) {
 				query = query.eq(column, filterValue);

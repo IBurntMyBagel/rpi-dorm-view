@@ -55,7 +55,7 @@ export default function Home() {
       setDorms(results ?? []);
     };
     fetchDorms();
-  }, [selectedYears, selectedRoomTypes, selectedRoomAvailability]);
+  }, [selectedYears, selectedRoomTypes, selectedRoomAvailability, activeTags]);
 
   // Multi year filter
   const yearFilteredDorms = selectedYears.size <= 1 ? dorms : dorms.filter((dorm) => {
@@ -113,10 +113,6 @@ export default function Home() {
   function addTag(key: string) {
     setActiveTags((prev) => new Set([...prev, key]));
   }
-
-  const availableTags = BOOL_TAGS.filter((t) => !activeTags.has(t.key));
-
-
 
 
 
@@ -232,11 +228,12 @@ export default function Home() {
                       {/* Attributes per dorm */}
                       <div className="grid grid-cols-3 gap-4">
                         <p>Year: {dorm.get_attributes()?.get("years") ?? "—"}</p>
-                        {/* TO DO FIX: ROOM TYPE AND ROOM SIZE DIFFERENT */}
                         <p>Room Types: {dorm.get_attributes()?.get("building_styles") ?? "—"}</p>
                         <p>Nearest dining hall: {dorm.get_attributes()?.get("nearest_dining_hall") ?? "—"}</p>
+                        <p>GI Housing Test: {dorm.get_attributes()?.get("gender_inclusive") ? "Yes" : "No"}</p>
+                        <p>Carpet: {dorm.get_amenities()?.get("carpet") ? "Yes" : "No"}</p>
                         <p>A/C: {dorm.get_amenities()?.get("air_conditioning") ? "Yes" : "No"}</p>
-                        <p>Elevator: No</p>
+                        <p>Elevator: {dorm.get_amenities()?.get("elevator") ? "Yes" : "No"}</p>
                       </div>
 
                       <p className="font-bold">Tags: ethernet, bike rack, elevator</p>
