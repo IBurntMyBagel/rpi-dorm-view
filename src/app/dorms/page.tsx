@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { DormBuilding } from "./DormBuilding"
+import { DormBuilding } from "../../lib/DormBuilding"
 import { QueryDatabase } from "./query_database";
 
 const BOOL_TAGS = [
@@ -10,6 +10,8 @@ const BOOL_TAGS = [
   { key: "air_conditioning", label: "A/C" },
   { key: "carpet", label: "Carpet" },
 ];
+
+
 
 export default function Home() {
   const db = useRef(new QueryDatabase());
@@ -211,10 +213,11 @@ export default function Home() {
           )}
 
           {/* dorm list */}
+          {/* works based on elements in dorms object list */}
           <ul className="space-y-4">
             {displayedDorms.map((dorm, index) => (
               <li key={index}>
-                <Link href="#">
+                <Link href={`/dorms/${encodeURIComponent(dorm.get_dorm_name())}`}>
                   <div className="flex p-4 bg-gray-400 rounded space-x-4 hover:bg-gray-500">
                     {/* Image TO DO: store images in db? cost? store images in public folder grab from there? */}
                     <img src="/fieldrpi.jpg" alt="86 field" className="w-48 h-48 object-cover rounded" />

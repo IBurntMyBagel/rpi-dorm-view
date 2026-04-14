@@ -1,5 +1,5 @@
-import {DormBuilding} from './DormBuilding.js';
-import {DormRoomTypes} from './DormRoomTypes.js';
+import {DormBuilding} from "../../lib/DormBuilding"
+import {DormRoomTypes} from '../../lib/DormRoomTypes.js';
 
 //any values hardcoded to null are either not in the database yet or never will be
 export class TranslateResponse{
