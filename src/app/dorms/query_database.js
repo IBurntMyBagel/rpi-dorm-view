@@ -128,25 +128,24 @@ export class QueryDatabase {
 			}
 
 
-			// Messed up fix later the room types and sizes mixes and price isn't working
-			// TO DO
-			// if (filterKey === "room_sizes") {
-			// 	const sizes = Array.isArray(filterValue) ? filterValue : [filterValue];
+			
+			if (filterKey === "room_sizes") {
+				const sizes = Array.isArray(filterValue) ? filterValue : [filterValue];
 
-			// 	const conditions = sizes.map((size) => {
-			// 		switch (size) {
-			// 		case "Single": return "single_cost.not.is.null";
-			// 		case "Double": return "double_cost.not.is.null";
-			// 		case "Triple": return "triple_cost.not.is.null";
-			// 		default: return null;
-			// 		}
-			// 	}).filter(Boolean);
+				const conditions = sizes.map((size) => {
+					switch (size) {
+						case "Single": return "single_cost.not.is.null";
+						case "Double": return "double_cost.not.is.null";
+						case "Triple": return "triple_cost.not.is.null";
+						default: return null;
+					}
+				}).filter(Boolean);
 
-			// 	if (conditions.length > 0) {
-			// 		query = query.or(conditions.join(","));
-			// 	}
-			// 	continue;
-			// }
+				if (conditions.length > 0) {
+					query = query.or(conditions.join(","));
+				}
+				continue;
+			}
 
 			// Exact match filters
 			if (EXACT_MATCH_FILTERS.has(filterKey)) {
