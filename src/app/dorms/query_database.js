@@ -35,18 +35,18 @@ const BUILDING_TYPE_MAP = {
 	Traditional: "Traditional",
 	Apartment: "Apartment",
 	Suite_Traditional: "Suite/Traditional",
-};
+}
 
 const RESTROOMS_MAP = {
 	// Do we need map for Restroom as filter?
 	Room: "R",
 	Floor: "F",
 	Room_Floor: "RF",
-};
+}
 
 const MATTRESS_SIZE_MAP = {
 	// idk if we need mattress size filter
-};
+}
 
 const NEAREST_DINING_MAP = {
 	// fixing DINING naming for blitman and RSDH
@@ -54,7 +54,7 @@ const NEAREST_DINING_MAP = {
 	Commons: "Commons",
 	Blitman: "Blitman",
 	Rsdh: "RSDH",
-};
+}
 
 const EXACT_MATCH_FILTERS = new Set([
 	// attribute filters not dorm stuff like years

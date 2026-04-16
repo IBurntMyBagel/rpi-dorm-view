@@ -53,7 +53,7 @@ class BudgetQuestion extends Question {
     get_UI_info() {
         return {
             text: this.text,
-            minBudget = this.minBudget
+            minBudget: this.minBudget
         };
     }
 }
