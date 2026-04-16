@@ -123,7 +123,7 @@ export default function Home() {
                         className="p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                       />
                       <p className="text-sm text-gray-500">
-                        Minimum requirement: ${q.min_value || 8520}
+                        Minimum requirement: ${"minBudget" in info ? info.minBudget : 8520}
                       </p>
                     </div>
                   )}
