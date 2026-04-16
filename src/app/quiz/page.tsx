@@ -117,9 +117,9 @@ export default function Home() {
                       <input
                         type="number"
                         min={"minBudget" in info ? info.minBudget : 8520}
-                        placeholder={`Min: $${q.min_value || 8520}`}
+                        placeholder={`Min: $${"minBudget" in info ? info.minBudget : 8520}`}
                         value={answers[`q${index}`]}
-                        onChange={(e) => handleUpdate(index, e.target.value)}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => handleUpdate(index, e.target.value)}
                         className="p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                       />
                       <p className="text-sm text-gray-500">
