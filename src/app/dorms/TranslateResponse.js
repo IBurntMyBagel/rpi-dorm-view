@@ -4,6 +4,13 @@ import {DormRoomTypes} from '../../lib/DormRoomTypes.js';
 //any values hardcoded to null are either not in the database yet or never will be
 export class TranslateResponse{
 
+	//Dorm,Building Type,Occupants,Staff,Floors,GI Housing,Restrooms,Mattress size,A/C,Carpet,Ethernet,Nearest Dining,Year,Single cost,Double cost,Triple cost,Kitchen
+  	//BARH,Suite,315,11,4,true,R,"Extra Long Twin - 36"" x 80"" x 6""",false,false,true,BARH,F,11040,9750,,true
+  	//Barton Hall,Suite/Traditional,291,9,4,true,RF,"Extra Long Twin - 36"" x 80"" x 6""",true,true,true,Commons,F,,,10090,false
+  	//Blitman,Suite,284,7,4,true,R,"Extra Long Twin - 36"" x 80"" x 6""",true,false,true,Blitman Dining,S,11040,9750,,true
+  	//Bray Hall,Traditional,142,5,3,false,F,,false,true,true,Commons,F,11040,9750,8520,true
+ 	//Cary Hall,Traditional,142,5,3,false,F,"Extra Long Twin - 36"" x 80"" x 6""",false,true,true,Commons,F,11040,9750,8520,true
+
 	translate_response(db_response){
 		//final returnable list of dorm objects
 		let dormlist = [];
