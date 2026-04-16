@@ -1,6 +1,6 @@
 "use client";
 
-import Link from 'next/link';
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState, FormEvent, ChangeEvent } from "react";
 import { DormBuilding } from "../../lib/DormBuilding";
 import { TranslateResponse } from "../dorms/TranslateResponse";
@@ -19,6 +19,7 @@ interface QuizAnswers {
 }
 
 export default function Home() {
+  const router = useRouter();
 
   //scrollable list of questions, multiple choice (select ONE) for 1-4, number field with minimum value requirement for 5
   //submit button at bottom
@@ -29,7 +30,7 @@ export default function Home() {
   //question 2: How do you feel about sharing a bedroom with other people?
     //I would like to share a bedroom with as few people as possible
     //I don't mind sharing a bedroom/would like to share a bedroom with friends
-  const q2 = new MultChoiceQuestion("How do you feel about sharing a bedroom with other people?", ["I would like to share a bedroom with as few people as possible", "I don't mind sharing a bedroom/would like to share a bedroom with friends"], "room types");
+  const q2 = new MultChoiceQuestion("How do you feel about sharing a bedroom with other people?", ["I would like to share a bedroom with as few people as possible", "I don't mind sharing a bedroom"], "room types");
   //question 3: How do you feel about sharing a bathroom with other people?
     //I would like to share a bathroom with as few people as possible
     //I don't mind sharing a bathroom
@@ -64,10 +65,68 @@ export default function Home() {
     questions.slice(0, 4).every((_, i) => answers[`q${i+1}` as keyof typeof answers] !== "") && 
     Number(answers.q4) >= 8520;
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (isFormValid) {
-      alert("Survey submitted! Check the console for data.");
+      
+      const supabase = createClient();
+      const translator = new TranslateResponse();
+      
+      // Fetch data
+      let query = supabase.from("Dorms").select("*");
+      const { data, error } = await query;
+      
+      const db_response = error
+        ? { data: [], statusText: "ERROR", error: error.message }
+        : { data: data, statusText: "OK" };
+
+      // Convert raw data to DormBuilding objects
+      let dormlist: DormBuilding[] = translator.translate_response(db_response);
+
+      // 3. Filter the list based on quiz answers
+      const filteredDorms = dormlist.filter((dorm) => {
+        const attrs = dorm.get_attributes();
+        
+        // Filter by Year (q0)
+        if (!attrs.get('years').includes(answers.q0[0])) return false;
+
+        // Filter by Room Type Privacy (q1)
+        // Checks if any available room type matches the user's preference
+        const roomTypes = attrs.get('room_types');
+        const hasMatchingRoom = roomTypes.some((room: DormRoomTypes) => {
+            const type = room.get_single_attributes('room_type').toLowerCase();
+            if (answers.q1.includes("as few people as possible")) {
+                return type.includes("single") || type.includes("double");
+            }
+            return true; // "Don't mind sharing" matches everything
+        });
+        if (!hasMatchingRoom) return false;
+
+        // Filter by Bathroom Privacy (q2)
+        if (answers.q2.includes("as few people as possible")) {
+            if (attrs.get('building_styles').includes("Traditional")) return false;
+        }
+
+        // Filter by Gender Inclusive (q3)
+        if (answers.q3 === "Yes" && !attrs.get('gender_inclusive')) return false;
+
+        // Filter by Budget (q4)
+        // Check if at least ONE room in the building is under the user's max budget
+        const withinBudget = roomTypes.some((room: DormRoomTypes) => 
+            room.get_single_attributes('yearly_price') <= Number(answers.q4)
+        );
+        if (!withinBudget) return false;
+
+        return true;
+      });
+
+      // 4. Navigate to the results page
+      // We'll use sessionStorage to pass the complex objects since they are large
+      const uiResults = filtered.map(dorm => dorm.dorm_list_UI_object());
+    
+    // Encode the list into the URL
+    const encodedData = encodeURIComponent(JSON.stringify(uiResults));
+    router.push(`/quiz/${encodedData}`);
     }
   };
 
