@@ -40,19 +40,19 @@ export default function Home() {
 
   // 2. State to track answers
   const [answers, setAnswers] = useState({
-    q0: "", q1: "", q2: "", q3: "", q4: ""
+    q1: "", q2: "", q3: "", q4: "", q5: ""
   });
 
   // 3. Update state handler
   const handleUpdate = (index: number, value: string | number) => {
-    setAnswers((prev) => ({ ...prev, [`q${index}`]: value }));
+    setAnswers((prev) => ({ ...prev, [`q${index+1}`]: value }));
   };
 
   // 4. Validation: Check if all questions are answered
   // q4 (Budget) must be >= 8520
   const isFormValid = 
-    questions.slice(0, 4).every((_, i) => answers[`q${i}` as keyof typeof answers] !== "") && 
-    Number(answers.q4) >= 8520;
+    questions.slice(0, 4).every((_, i) => answers[`q${i+1}` as keyof typeof answers] !== "") && 
+    Number(answers.q5) >= 8520;
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -80,20 +80,20 @@ export default function Home() {
                   </h2>
 
                   {/* Render Multiple Choice */}
-                  {info.options ? (
+                  {"options" in info && info.options ? (
                     <div className="flex flex-col gap-2">
-                      {info.options.map((option) => (
+                      {info.options.map((option: string) => (
                         <label 
                           key={option} 
                           className={`flex items-center p-3 border rounded-md cursor-pointer transition-colors ${
-                            answers[`q${index}`] === option ? "bg-red-50 border-red-500" : "hover:bg-gray-50"
+                            answers[`q${index+1}`] === option ? "bg-red-50 border-red-500" : "hover:bg-gray-50"
                           }`}
                         >
                           <input
                             type="radio"
                             name={`question-${index}`}
                             value={option}
-                            checked={answers[`q${index}`] === option}
+                            checked={answers[`q${index+1}`] === option}
                             onChange={() => handleUpdate(index, option)}
                             className="w-4 h-4 text-red-600 focus:ring-red-500"
                           />
@@ -106,9 +106,9 @@ export default function Home() {
                     <div className="flex flex-col gap-2">
                       <input
                         type="number"
-                        min={q.min_value || 8520}
+                        min={"minBudget" in info ? info.minBudget : 8520}
                         placeholder={`Min: $${q.min_value || 8520}`}
-                        value={answers[`q${index}`]}
+                        value={answers[`q${index+1}`]}
                         onChange={(e) => handleUpdate(index, e.target.value)}
                         className="p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                       />
