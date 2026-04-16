@@ -125,7 +125,7 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-gray-50 flex flex-col items-center py-12 px-4">
+    <main className="min-h-screen bg-gray-50 flex flex-col items-center pt-24 pb-12 px-4">
       <div className="max-w-2xl w-full bg-white shadow-md rounded-lg p-8">
         <h1 className="text-3xl font-bold text-red-700 mb-8 border-b pb-4">
           RPI Dorm View - Quiz

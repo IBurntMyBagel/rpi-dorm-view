@@ -15,7 +15,7 @@ export default function ResultsPage({ params }: { params: Promise<{ id: string }
   }
 
   return (
-    <main className="min-h-screen bg-gray-50 py-12 px-4">
+    <main className="min-h-screen bg-gray-50 pt-24 pb-12 px-4">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-3xl font-bold text-red-700 mb-8">Your Dorm Matches</h1>
 
