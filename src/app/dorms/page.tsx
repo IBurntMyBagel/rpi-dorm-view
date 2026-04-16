@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { DormBuilding } from "../../lib/DormBuilding"
+import { DormBuilding } from "../../lib/DormBuilding";
 import { QueryDatabase } from "./query_database";
 
 const BOOL_TAGS = [
