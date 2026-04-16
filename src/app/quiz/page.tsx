@@ -140,6 +140,7 @@ export default function Home() {
         <form onSubmit={handleSubmit} className="space-y-10">
           <div className="max-h-[60vh] overflow-y-auto pr-4 space-y-12 custom-scrollbar">
             {questions.map((q, index) => {
+              const currentAnswer = answers[`q${index}`];
               const info = q.get_UI_info();
 
               return (
@@ -155,14 +156,14 @@ export default function Home() {
                         <label 
                           key={option} 
                           className={`flex items-center p-3 border rounded-md cursor-pointer transition-colors ${
-                            answers[`q${index}`] === option ? "bg-red-50 border-red-500" : "hover:bg-gray-50"
+                            currentAnswer === option ? "bg-red-50 border-red-500" : "hover:bg-gray-50"
                           }`}
                         >
                           <input
                             type="radio"
                             name={`question-${index}`}
                             value={option}
-                            checked={answers[`q${index}`] === option}
+                            checked={currentAnswer === option}
                             onChange={() => handleUpdate(index, option)}
                             className="w-4 h-4 text-red-600 focus:ring-red-500"
                           />
@@ -177,7 +178,7 @@ export default function Home() {
                         type="number"
                         min={"minBudget" in info ? info.minBudget : 8520}
                         placeholder={`Min: $${"minBudget" in info ? info.minBudget : 8520}`}
-                        value={answers[`q${index}`]}
+                        value=value={currentAnswer}
                         onChange={(e: ChangeEvent<HTMLInputElement>) => handleUpdate(index, e.target.value)}
                         className="p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                       />
