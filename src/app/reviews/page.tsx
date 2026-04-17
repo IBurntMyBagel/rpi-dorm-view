@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import ReviewCard, { ReviewForm, initialReviews } from './ReviewCard';
+import ReviewCard, { ReviewForm, initialReviews, reviewClient } from './ReviewCard';
 
 const ReviewPage: React.FC = () => {
   return (
@@ -11,7 +11,7 @@ const ReviewPage: React.FC = () => {
 
       <div className="mt-8 space-y-4">
         {initialReviews && initialReviews.map((review) => (
-          <ReviewCard key={review.date} review={review} />
+          <ReviewCard key={review.timestamp} review={review} />
         ))}
       </div>
     </div>
