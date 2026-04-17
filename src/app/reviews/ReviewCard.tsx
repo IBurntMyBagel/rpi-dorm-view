@@ -43,14 +43,14 @@ const initialReviews: ReviewData[] = [
     rating: 5,
     content: "Great dorm, highly recommend!",
     timestamp: "2026-04-10",
-    dorm_name: "General",
+    dorm_name: "Crockett",
   },
   {
     author: "Bob",
     rating: 4,
     content: "Very solid, but could be improved.",
     timestamp: "2026-04-12",
-    dorm_name: "General",
+    dorm_name: "Crockett",
   },
 ];
 
@@ -64,6 +64,7 @@ const ReviewCard: React.FC<ReviewProps> = ({ review }) => {
       <div className="flex justify-between items-center">
         <h2 className="font-semibold">{review.author}</h2>
         <span className="text-sm text-gray-500">{review.timestamp}</span>
+        <h2 className="font-semibold">{review.dorm_name}</h2>
       </div>
 
       <div className="mt-2 text-yellow-500">
