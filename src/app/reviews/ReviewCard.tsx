@@ -35,24 +35,28 @@ class reviewClient {
     }
     return data;
   }
+  async getReviewsByDormName(dormName: string) {
+    const { data, error } = await this.supabase
+      .from("Reviews")
+      .select("*")
+      .eq("dorm_name", dormName)
+      .order("timestamp", { ascending: false });
+    if (error) {
+      throw new Error(error.message);
+    }
+    return data;
+  }
+  async getReviews() : Promise<ReviewData[]> {
+    const { data, error } = await this.supabase
+      .from("Reviews")
+      .select("*")
+      .order("timestamp", { ascending: false });
+    if (error) {
+      throw new Error(error.message);
+    }
+    return data;
+  }
 }
-
-const initialReviews: ReviewData[] = [
-  {
-    author: "Alice",
-    rating: 5,
-    content: "Great dorm, highly recommend!",
-    timestamp: "2026-04-10",
-    dorm_name: "Crockett",
-  },
-  {
-    author: "Bob",
-    rating: 4,
-    content: "Very solid, but could be improved.",
-    timestamp: "2026-04-12",
-    dorm_name: "Crockett",
-  },
-];
 
 type ReviewProps = {
   review: ReviewData;
@@ -183,5 +187,6 @@ const ReviewForm: React.FC<{}> = () => {
   );
 };
 
-export { ReviewForm, initialReviews, reviewClient };
+export { ReviewForm, reviewClient };
+export type { ReviewData };
 export default ReviewCard;
