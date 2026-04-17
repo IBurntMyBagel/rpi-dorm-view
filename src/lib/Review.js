@@ -1,5 +1,5 @@
 //user reviews
-import { supabase } from '@/utils/supabase/client';
+import { supabase } from '../utils/supabase/client';
 
 class Review {
     //encapsulation
