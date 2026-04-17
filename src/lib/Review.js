@@ -29,6 +29,10 @@ class Review {
     //method abstraction (simple interface, complex task)
     async addReview(dorm_name) {
         try {
+            if (!supabase) {
+                throw new Error('Supabase is not configured. Please set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY environment variables.');
+            }
+
             const reviewData = this.get_info();
 
             const { data, error } = await supabase
