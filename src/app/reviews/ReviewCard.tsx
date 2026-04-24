@@ -22,7 +22,7 @@ class reviewClient {
 
   async addReview(dormName: string, review: any) {
     const { data, error } = await this.supabase
-      .from("reviews")
+      .from("Reviews")
       .insert({
         dorm_name: review.dorm_name || dormName,
         author: review.author,
@@ -35,24 +35,28 @@ class reviewClient {
     }
     return data;
   }
+  async getReviewsByDormName(dormName: string) {
+    const { data, error } = await this.supabase
+      .from("Reviews")
+      .select("*")
+      .eq("dorm_name", dormName)
+      .order("timestamp", { ascending: false });
+    if (error) {
+      throw new Error(error.message);
+    }
+    return data;
+  }
+  async getReviews() : Promise<ReviewData[]> {
+    const { data, error } = await this.supabase
+      .from("Reviews")
+      .select("*")
+      .order("timestamp", { ascending: false });
+    if (error) {
+      throw new Error(error.message);
+    }
+    return data;
+  }
 }
-
-const initialReviews: ReviewData[] = [
-  {
-    author: "Alice",
-    rating: 5,
-    content: "Great dorm, highly recommend!",
-    timestamp: "2026-04-10",
-    dorm_name: "General",
-  },
-  {
-    author: "Bob",
-    rating: 4,
-    content: "Very solid, but could be improved.",
-    timestamp: "2026-04-12",
-    dorm_name: "General",
-  },
-];
 
 type ReviewProps = {
   review: ReviewData;
@@ -64,6 +68,7 @@ const ReviewCard: React.FC<ReviewProps> = ({ review }) => {
       <div className="flex justify-between items-center">
         <h2 className="font-semibold">{review.author}</h2>
         <span className="text-sm text-gray-500">{review.timestamp}</span>
+        <h2 className="font-semibold">{review.dorm_name}</h2>
       </div>
 
       <div className="mt-2 text-yellow-500">
@@ -76,8 +81,9 @@ const ReviewCard: React.FC<ReviewProps> = ({ review }) => {
   );
 };
 
-const ReviewForm: React.FC<{ dormName?: string }> = ({ dormName = "General" }) => {
+const ReviewForm: React.FC<{}> = () => {
   const [author, setAuthor] = useState("");
+  const [dormName, setDormName] = useState("");
   const [content, setContent] = useState("");
   const [rating, setRating] = useState(5);
   const [loading, setLoading] = useState(false);
@@ -103,6 +109,7 @@ const ReviewForm: React.FC<{ dormName?: string }> = ({ dormName = "General" }) =
 
       // Reset form
       setAuthor("");
+      setDormName("");
       setContent("");
       setRating(5);
     } catch (error) {
@@ -140,6 +147,15 @@ const ReviewForm: React.FC<{ dormName?: string }> = ({ dormName = "General" }) =
         required
       />
 
+      <input
+        type="text"
+        placeholder="Dorm Name"
+        className="w-full border rounded p-2"
+        value={dormName}
+        onChange={(e) => setDormName(e.target.value)}
+        required
+      />
+
       <select
         className="w-full border rounded p-2"
         value={rating}
@@ -171,5 +187,6 @@ const ReviewForm: React.FC<{ dormName?: string }> = ({ dormName = "General" }) =
   );
 };
 
-export { ReviewForm, initialReviews, reviewClient };
+export { ReviewForm, reviewClient };
+export type { ReviewData };
 export default ReviewCard;
