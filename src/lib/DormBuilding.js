@@ -23,6 +23,9 @@ export class DormBuilding{
 
 	//get entire dictionary
 	get_attributes(){
+		//this does not use structured clone as one of the map values is a list of custom class objects, which
+		//structuredClone will override and mess with. This is also why it is simple assignment only in the
+		//set_attributes function as well.
 		return this.#attributes;
 	}
 
@@ -60,7 +63,7 @@ export class DormBuilding{
 		if (typeof this.#attributes === 'undefined' && att_map instanceof Map){
 			//check for correct keys
 			if(this.check_keys(att_map, 'attributes')){
-				this.#attributes = structuredClone(att_map);
+				this.#attributes = att_map;
 				return 0;
 			}
 		}
@@ -125,8 +128,8 @@ export class DormBuilding{
 	//dorm page: dorm list
 	dorm_list_UI_object(){
 		//list object to string
-		let years_string = ''
-		for (let i = 0; i<this.#attributes.get('years').length; i++){
+		let years_string = '';
+		for (let i = 0; i < this.#attributes.get('years').length; i++){
 			if (i == this.#attributes.get('years').length-1){
 				years_string += this.#attributes.get('years')[i];
 			} else {
@@ -134,8 +137,8 @@ export class DormBuilding{
 			} 
 		}
 		//list object to string
-		let room_types_string = ''
-		for (let i = 0; i<this.#attributes.get('room_types').length; i++){
+		let room_types_string = '';
+		for (let i = 0; i < this.#attributes.get('room_types').length; i++){
 			if (i == this.#attributes.get('room_types').length-1){
 				room_types_string += this.#attributes.get('room_types')[i].get_single_attributes('room_type') + `($${this.#attributes.get('room_types')[i].get_single_attributes('yearly_price')})`;
 			} else {
@@ -143,8 +146,8 @@ export class DormBuilding{
 			} 
 		}
 		//list object to string
-		let building_styles_string = ''
-		for (let i = 0; i<this.#attributes.get('building_styles').length; i++){
+		let building_styles_string = '';
+		for (let i = 0; i < this.#attributes.get('building_styles').length; i++){
 			if (i == this.#attributes.get('building_styles').length-1){
 				building_styles_string += this.#attributes.get('building_styles')[i];
 			} else {
@@ -164,8 +167,8 @@ export class DormBuilding{
 	//dorm details page
 	dorm_details_UI_object(){
 		//list object to string
-		let years_string = ''
-		for (let i = 0; i<this.#attributes.get('years').length; i++){
+		let years_string = '';
+		for (let i = 0; i < this.#attributes.get('years').length; i++){
 			if (i == this.#attributes.get('years').length-1){
 				years_string += this.#attributes.get('years')[i];
 			} else {
@@ -173,8 +176,8 @@ export class DormBuilding{
 			} 
 		}
 		//list object to string
-		let room_types_string = ''
-		for (let i = 0; i<this.#attributes.get('room_types').length; i++){
+		let room_types_string = '';
+		for (let i = 0; i < this.#attributes.get('room_types').length; i++){
 			if (i == this.#attributes.get('room_types').length-1){
 				room_types_string += this.#attributes.get('room_types')[i].get_single_attributes('room_type') + `($${this.#attributes.get('room_types')[i].get_single_attributes('yearly_price')})`;
 			} else {
@@ -182,14 +185,16 @@ export class DormBuilding{
 			} 
 		}
 		//list object to string
-		let building_styles_string = ''
-		for (let i = 0; i<this.#attributes.get('building_styles').length; i++){
+		let building_styles_string = '';
+		for (let i = 0; i < this.#attributes.get('building_styles').length; i++){
 			if (i == this.#attributes.get('building_styles').length-1){
 				building_styles_string += this.#attributes.get('building_styles')[i];
 			} else {
 				building_styles_string += this.#attributes.get('building_styles')[i] + ', ';
 			} 
 		}
+		//all values are strings, format string is used where value MIGHT not be a string.
+		//if a value is a string anyway, same result.
 		return {
 			dorm_name: this.#dorm_name,
 			years: years_string,
@@ -205,8 +210,8 @@ export class DormBuilding{
 			wardrobe: `${this.#furniture.get('wardrobe')}`,
 			closet: `${this.#furniture.get('closet')}`,
 			bunkable_bed: `${this.#furniture.get('bunkable_bed')}`,
-			mattress_size: `${this.#furniture.get('mattress_size')[0]}` + '" x'+ `${this.#furniture.get('mattress_size')[1]}` + '"',
-			underbed_height: `${this.#furniture.get('underbed_height')}`+'"',
+			mattress_size: `${this.#furniture.get('mattress_size')}`,
+			underbed_height: `${this.#furniture.get('underbed_height')}`,
 			desk_and_chair: `${this.#furniture.get('desk_and_chair')}`,
 			bookcase: `${this.#furniture.get('bookcase')}`,
 			dresser: `${this.#furniture.get('dresser')}`,
